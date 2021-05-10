@@ -27,10 +27,18 @@ def speak(text):
     engine.runAndWait()
     # engine.save_to_file(text,'speech.mp3')    
 
+def search(text):
+                speak('searching...')
+            print('searching...')
+            text = wiki.summary(query , sentences=2)
+            print(text)
+            time.sleep(0.5)
+            speak(text)
+
+def command
 
 while(down):
     
-    query = ''
     list = ['what', 'who', 'about']
     with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
         r.adjust_for_ambient_noise(source,duration=1.5)
@@ -48,8 +56,11 @@ while(down):
             speak("cannot request form goolge wait")
             
             
-    for q in list:
-        speak('what do you want to search')
+    for _ in list:
+        if _ in query:
+
+            
+            
      
     if 'shutdown' in query:
         print(query)
