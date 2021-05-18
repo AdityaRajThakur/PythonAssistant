@@ -23,7 +23,7 @@ r = sr.Recognizer()
 # r.adjust_for_ambient_noise()
 # r.energy_threshold
 engine = pyttsx3.init('sapi5')
-engine.setProperty('rate', 150)
+engine.setProperty('rate', 130)
 
 micname = "Microphone (WO Mic Device)"
 device_id = 0;
@@ -105,9 +105,11 @@ def Command():
 
  
 def Execution():
+    time.sleep(.5)
     greet_to()
     down = True
-    speak('wait a moment intializing the system')
+    speak('Wait a moment sir intializing the system')
+    time.sleep(1)
     while(down):
         query = Command()
         if 'who are you' in query:
