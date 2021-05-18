@@ -31,15 +31,14 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName("label_2")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser.setGeometry(QtCore.QRect(160, 320, 151, 31))
-        self.textBrowser.setStyleSheet("background:transparent;\n"
-"border-radius: 2px solid balck;\n"
-"")
+        self.textBrowser.setStyleSheet("background:transparent;\n""border-radius: 2px solid balck;\n""color:white;\n")
         self.textBrowser.setObjectName("textBrowser")
         self.textBrowser_2 = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser_2.setGeometry(QtCore.QRect(160, 70, 151, 31))
         self.textBrowser_2.setStyleSheet("background:transparent;\n"
 "border-radius:2p solid black;\n"
-"")
+"color:white;\n")
+        
         self.textBrowser_2.setObjectName("textBrowser_2")
         MainWindow.setCentralWidget(self.centralwidget)
 

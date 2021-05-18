@@ -1,3 +1,4 @@
+import sys
 import requests
 import pyttsx3
 import speech_recognition as sr
@@ -8,6 +9,15 @@ import webbrowser
 import os
 from plyer import notification
 import random
+from PyQt5 import QtWidgets, QtCore,QtGui
+from PyQt5.QtCore import QTimer,QTime,QDate,Qt
+from PyQt5.QtGui import QMovie
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.uic import loadUiType
+from jarvis_gui import Ui_MainWindow
+import _thread
 
 
 r = sr.Recognizer() 
@@ -20,8 +30,8 @@ micname = "Microphone (WO Mic Device)"
 device_id = 0;
 sample_rate = 48000
 chunk_size = 2048*2
-down =  True
-greet = True
+
+
 master = 'Aditya'
 mic_list = sr.Microphone.list_microphone_names()
 list = ['what', 'who', 'about']
@@ -66,15 +76,15 @@ def opencode():
 
 
 def search():
-    speak('What do you want to search from wikipeadia')
-    query = Command()
-    speak('searching in wikipeadia')
-    text = wiki.summary(query , sentences=1)
-    speak('Search complete... result may or may not be accurate')
-    print(text)
-    time.sleep(0.5)
-    speak(text)
-
+    # speak('What do you want to search from wikipeadia')
+    # query = Command()
+    # speak('searching in wikipeadia')
+    # text = wiki.summary(query , sentences=1)
+    # speak('Search complete... result may or may not be accurate')
+    # print(text)
+    # time.sleep(0.5)
+    # speak(text)
+    pass
 def Command():
     with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
         r.adjust_for_ambient_noise(source , duration=2);
@@ -91,45 +101,44 @@ def Command():
         speak(" I can't hear you...")
         print("I can't hear you... sir")  
         return "None"
-    return query   
+    return query  
+
+ 
+def Execution():
+    greet_to()
+    down = True
+    speak('wait a moment intializing the system')
+    while(down):
+        query = Command()
+        if 'who are you' in query:
+            info()  
+            
+        elif 'wikipedia' in query:
+                print('wikipedia')
+                search()
+        elif 'shutdown' in query:
+                print(query)
+                
+                down = False
+                speak('shutting down the system ')
+                break;
+        elif 'the time' in query:
+                strTime = datetime.datetime.now().strftime("%H:%M:%S")    
+                speak(f"Sir, the time is {strTime}")
+        elif 'open youtube' in query:
+                speak('opening youtube')
+                webbrowser.open("youtube.com")
+        elif 'open google' in query:
+                speak('opening google')
+                webbrowser.open("google.com")
+        elif 'open stackoverflow' in query:
+                speak('opening stackoverflow')
+                webbrowser.open("stackoverflow.com")   
+        elif 'open code' in query:
+                speak('Openining Code ')
+                opencode();
 
 
 
 if __name__ == '__main__':
-    greet_to()
-    speak('wait a moment intializing the system')
-    while(down):
-        
-        query = Command()
-        
-        if 'who are you' in query:
-            info()  
-        
-        elif 'wikipedia' in query:
-            print('wikipedia')
-            search()
-        elif 'shutdown' in query:
-            print(query)
-            down = False
-            speak('shutting down the system ')
-            break;
-        elif 'the time' in query:
-            strTime = datetime.datetime.now().strftime("%H:%M:%S")    
-            speak(f"Sir, the time is {strTime}")
-        elif 'open youtube' in query:
-            speak('opening youtube')
-            webbrowser.open("youtube.com")
-        elif 'open google' in query:
-            speak('opening google')
-            webbrowser.open("google.com")
-        elif 'open stackoverflow' in query:
-            speak('opening stackoverflow')
-            webbrowser.open("stackoverflow.com")   
-        elif 'open code' in query:
-            speak('Openining Code ')
-            opencode();
-
-    
-
-        
-    
+    Execution()
