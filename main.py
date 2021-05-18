@@ -17,8 +17,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUiType
 from jarvis_gui import Ui_MainWindow
-import _thread
-
+import threading
 
 r = sr.Recognizer() 
 # r.adjust_for_ambient_noise()
@@ -40,6 +39,7 @@ list = ['what', 'who', 'about']
 def get_device_id():
     for i, mic in enumerate(mic_list):
         if micname == mic:
+            global device_id
             device_id = i;
             break
 def info():
@@ -137,8 +137,19 @@ def Execution():
         elif 'open code' in query:
                 speak('Openining Code ')
                 opencode();
-
-
-
+def fun():
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
 if __name__ == '__main__':
-    Execution()
+    thread = threading.Thread(target=Execution)
+    # thread1 = threading.Thread(target=fun)
+    thread.start()
+    # thread1.start()
+    fun()
+    thread.join()
+    # thread1.join()
+    
