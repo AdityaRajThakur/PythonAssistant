@@ -35,7 +35,7 @@ def get_device_id():
 def info():
     module_name = 'Jarvis'
     version = 2.0
-    speak(f'Sir My name is {module_name} , version {version} ')
+    speak(f'Sir My name is {module_name} , version {version} and created by {master}')
 
 def greet_to():
     hour = int(datetime.datetime.now().strftime('%I'))
@@ -53,7 +53,7 @@ def greet_to():
         speak(f'Good Night {master}')
 
 def ntfc(title,messag):
-    notif = notification.notify(title = title , messag = messag ,timeout = 2);
+    notification.notify(title = title , messag = messag ,timeout = 2);
 
 def speak(text):
     engine.say(text)
@@ -70,66 +70,61 @@ def search():
     query = Command()
     speak('searching in wikipeadia')
     text = wiki.summary(query , sentences=1)
-    speak('Search complete result may or may not be accurate')
+    speak('Search complete... result may or may not be accurate')
     print(text)
     time.sleep(0.5)
     speak(text)
 
 def Command():
     with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
-        # r.adjust_for_ambient_noise(source)
-        print('listening...')
-        r.pause_threshold = 1
+        r.adjust_for_ambient_noise(source , duration=2);
+        print('listening..')
+        # r.pause_threshold = 1
         audio = r.listen(source)
-        try:
-            print('Recognizing..')
-            query = r.recognize_google(audio)
-        except sr.UnknownValueError:
-            print('say again')
-            # speak('say again')
-        except sr.RequestError as e:
-            print("cannot request from google wait")
-            # speak("cannot request form goolge wait")
-            return None
-        return query
+    try:
+        print("Recognizing...")    
+        query = (r.recognize_google(audio, language='en-in')).lower()
+        print(f"User said: {query}\n")
+
+    except Exception as e:
+        # print(e)    
+        speak(" I can't hear you...")
+        print("I can't hear you... sir")  
+        return "None"
+    return query   
 
 
 
 if __name__ == '__main__':
+    greet_to()
+    speak('wait a moment intializing the system')
     while(down):
+        
         query = Command()
-        if greet==True:
-            greet_to()
-            greet = False
-            
-        elif 'who are you' in query:
-            info()
-            
-        elif 'wikipeadia wiki' in query:
+        
+        if 'who are you' in query:
+            info()  
+        
+        elif 'wikipedia' in query:
+            print('wikipedia')
             search()
-                
         elif 'shutdown' in query:
             print(query)
             down = False
             speak('shutting down the system ')
             break;
-        
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")    
             speak(f"Sir, the time is {strTime}")
-            
         elif 'open youtube' in query:
             speak('opening youtube')
             webbrowser.open("youtube.com")
-
         elif 'open google' in query:
             speak('opening google')
             webbrowser.open("google.com")
-
         elif 'open stackoverflow' in query:
             speak('opening stackoverflow')
-            webbrowser.open("stackoverflow.com") 
-              
+            webbrowser.open("stackoverflow.com")   
         elif 'open code' in query:
             speak('Openining Code ')
             opencode();
