@@ -62,17 +62,16 @@ def greet_to():
     else:
         speak(f'Good Night {master}')
 
-def ntfc(title,messag):
-    notification.notify(title = title , messag = messag ,timeout = 2);
+def ntfc(title,m):
+    notification.notify(title = title , app_name = 'Jarvis',message = m ,timeout = 6,app_icon ='E:\\PyAssistant\\brain.ico',toast = True)
 
 def speak(text):
     engine.say(text)
     engine.runAndWait()
     # engine.save_to_file(text,'speech.mp3')    
 
-def opencode():
-        vscodepath = 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe'
-        os.startfile(vscodepath)
+def open(path):
+        os.startfile(path)
 
 
 def search():
@@ -85,61 +84,81 @@ def search():
     # time.sleep(0.5)
     # speak(text)
     pass
-def Command():
-    with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
-        r.adjust_for_ambient_noise(source , duration=2);
-        print('listening..')
-        # r.pause_threshold = 1
-        audio = r.listen(source)
-    try:
-        print("Recognizing...")    
-        query = (r.recognize_google(audio, language='en-in')).lower()
-        print(f"User said: {query}\n")
-
-    except Exception as e:
-        # print(e)    
-        speak(" I can't hear you...")
-        print("I can't hear you... sir")  
-        return "None"
-    return query  
 
  
 def Execution():
+    def Command():
+        with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
+            r.adjust_for_ambient_noise(source , duration=2);
+            print('listening..')
+            # r.pause_threshold = 1
+            audio = r.listen(source)
+        try:
+            print("Recognizing...")    
+            query = (r.recognize_google(audio, language='en-in')).lower()
+            print(f"User said: {query}\n")
+            # time.sleep(2)
+        except Exception as e:
+            # print(e)    
+            speak(" I can't hear you...")
+            print("I can't hear you... sir")  
+            return "None"
+        return query  
     time.sleep(.5)
     greet_to()
     down = True
-    speak('Wait a moment sir intializing the system')
+    speak('Wait a few moment intializing the system')
     time.sleep(1)
+    speak('System is ready to use')
     while(down):
+        
         query = Command()
+        
         if 'who are you' in query:
             info()  
-            
         elif 'wikipedia' in query:
                 print('wikipedia')
                 search()
         elif 'shutdown' in query:
                 print(query)
-                
                 down = False
-                speak('shutting down the system ')
+                speak('Shutting down the system')
                 break;
         elif 'the time' in query:
                 strTime = datetime.datetime.now().strftime("%H:%M:%S")    
+                ntfc('Time',strTime)
                 speak(f"Sir, the time is {strTime}")
         elif 'open youtube' in query:
                 speak('opening youtube')
-                webbrowser.open("youtube.com")
+                webbrowser.register('chrome',None,webbrowser.BackgroundBrowser('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'))
+                webbrowser.get('chrome').open('youtube.com')
         elif 'open google' in query:
                 speak('opening google')
-                webbrowser.open("google.com")
-        elif 'open stackoverflow' in query:
+                webbrowser.register('chrome',None,webbrowser.BackgroundBrowser('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'))
+                webbrowser.get('chrome').open('Google.com')
+        elif 'stackoverflow' in query:
                 speak('opening stackoverflow')
-                webbrowser.open("stackoverflow.com")   
+                webbrowser.register('chrome',None,webbrowser.BackgroundBrowser('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'))
+                webbrowser.get('chrome').open('stackoverflow.com')
+                #https://www.google.com/search?q=
+        elif 'github' in query:
+                speak('opening github')
+                webbrowser.register('chrome',None,webbrowser.BackgroundBrowser('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'))
+                webbrowser.get('chrome').open('github.com')
+                #https://www.google.com/search?q=
         elif 'open code' in query:
                 speak('Openining Code ')
-                opencode();
+                open('C:\\Users\\Administrator\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe')
+        elif 'open cmd' in query:
+                speak('Opening Command Prompt')
+                open('C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\System Tools\\Command Prompt.lnk')
+        elif 'open chrome' in query:
+                speak('Opening Google Chrome')
+                open('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe')
+        
 def fun():
+    thread.start()
+    # pid = thread.ident()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
@@ -149,9 +168,9 @@ def fun():
 if __name__ == '__main__':
     thread = threading.Thread(target=Execution)
     # thread1 = threading.Thread(target=fun)
-    thread.start()
-    # thread1.start()
     fun()
     thread.join()
+    
+    # thread1.start()
     # thread1.join()
     
