@@ -7,8 +7,8 @@ import time
 import datetime
 import webbrowser
 import os
-from plyer import notification
 import random
+from plyer import notification
 from PyQt5 import QtWidgets, QtCore,QtGui
 from PyQt5.QtCore import QTimer,QTime,QDate,Qt
 from PyQt5.QtGui import QMovie
@@ -75,14 +75,6 @@ def open(path):
 
 
 def search():
-    # speak('What do you want to search from wikipeadia')
-    # query = Command()
-    # speak('searching in wikipeadia')
-    # text = wiki.summary(query , sentences=1)
-    # speak('Search complete... result may or may not be accurate')
-    # print(text)
-    # time.sleep(0.5)
-    # speak(text)
     pass
 
  
@@ -97,7 +89,7 @@ def Execution():
             print("Recognizing...")    
             query = (r.recognize_google(audio, language='en-in')).lower()
             print(f"User said: {query}\n")
-            # time.sleep(2)
+            
         except Exception as e:
             # print(e)    
             speak(" I can't hear you...")
@@ -158,7 +150,7 @@ def Execution():
         
 def fun():
     thread.start()
-    # pid = thread.ident()
+    
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
@@ -167,10 +159,7 @@ def fun():
     sys.exit(app.exec_())
 if __name__ == '__main__':
     thread = threading.Thread(target=Execution)
-    # thread1 = threading.Thread(target=fun)
+
     fun()
     thread.join()
-    
-    # thread1.start()
-    # thread1.join()
     
