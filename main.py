@@ -7,6 +7,7 @@ import time
 import datetime
 import webbrowser
 import os
+import subprocess
 import random
 from plyer import notification
 from PyQt5 import QtWidgets, QtCore,QtGui
@@ -75,8 +76,6 @@ def search():
 def push():
     # witer the push to git hub code here 
     pass 
-def sleep():
-    speak("")
 def Execution():
     def Command():
         with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
@@ -112,10 +111,15 @@ def Execution():
                 print('wikipedia')
                 search()
         elif 'shutdown' in query:
+                subprocess.call('shutdown -s -t 5')
                 pass
         
         elif 'sleep' in query:
-                sleep()
+                speak("Sir , let me know when you need me")
+                while True:
+                    wake = Command()
+                    if 'jarvis' in wake:
+                        break;
         elif 'the time' in query:
                 strTime = datetime.datetime.now().strftime("%H:%M:%S")    
                 ntfc('Time',strTime)
