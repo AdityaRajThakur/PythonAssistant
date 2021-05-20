@@ -16,7 +16,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUiType
-from jarvisGUI.MainGUI import Ui_MainWindow
+from GUI.MainGUI import Ui_MainWindow
 import threading
 
 r = sr.Recognizer() 
@@ -42,12 +42,12 @@ def info():
     version = 2.0
     speak(f'Sir My name is {module_name} , version {version} and created by {master}')
 
+
+
 def greet_to():
     hour = int(datetime.datetime.now().strftime('%I'))
-   
     # minute = int(datetime.datetime.now().strftime('%M'))
     meridian = str(datetime.datetime.now().strftime('%p'))
-    
     if hour>=5 and hour<=12 and meridian=='AM':
         speak(f'Good Morning {master}')
     elif hour>=1 and hour<=6 and meridian=='PM':
@@ -75,7 +75,8 @@ def search():
 def push():
     # witer the push to git hub code here 
     pass 
-
+def sleep():
+    speak("")
 def Execution():
     def Command():
         with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
@@ -111,10 +112,10 @@ def Execution():
                 print('wikipedia')
                 search()
         elif 'shutdown' in query:
-                print(query)
-                down = False
-                speak('Shutting down the system')
-                break;
+                pass
+        
+        elif 'sleep' in query:
+                sleep()
         elif 'the time' in query:
                 strTime = datetime.datetime.now().strftime("%H:%M:%S")    
                 ntfc('Time',strTime)
