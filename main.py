@@ -67,15 +67,17 @@ def speak(text):
     # engine.save_to_file(text,'speech.mp3')    
 
 def open(path):
-        os.startfile(path)
-
+    os.startfile(path)
 
 def search():
+    # write the search code in here
     pass
 
 def push():
-    # witer the push to git hub code here 
+    # writer the push to git hub code here 
     pass 
+def report():
+    pass
 def Execution():
     def Command():
         with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
@@ -111,9 +113,8 @@ def Execution():
                 print('wikipedia')
                 search()
         elif 'shutdown' in query:
+                speak('Shuting down the System')
                 subprocess.call('shutdown -s -t 5')
-                pass
-        
         elif 'sleep' in query:
                 speak("Sir , let me know when you need me")
                 while True:
@@ -152,12 +153,12 @@ def Execution():
                 speak('Opening Google Chrome')
                 open('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe')
         elif 'take input' in query:
-                string = input('Enter the command ')
-                print(f"Entered text is {string}")
+                pass
         elif 'push to github' in query:
                 speak('Pushing to Github')
                 push()
-                
+        elif 'wheather' in query:
+                report()
 def fun():
     thread.start()
     app = QtWidgets.QApplication(sys.argv)
