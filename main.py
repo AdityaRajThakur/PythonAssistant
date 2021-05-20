@@ -16,7 +16,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUiType
-from jarvis_gui import Ui_MainWindow
+from jarvisGUI.MainGUI import Ui_MainWindow
 import threading
 
 r = sr.Recognizer() 
@@ -32,16 +32,11 @@ chunk_size = 2048*2
 
 
 master = 'Aditya'
-mic_list = sr.Microphone.list_microphone_names()
-list = ['what', 'who', 'about']
+# mic_list = sr.Microphone.list_microphone_names()
 
 
-def get_device_id():
-    for i, mic in enumerate(mic_list):
-        if micname == mic:
-            global device_id
-            device_id = i;
-            break
+
+
 def info():
     module_name = 'Jarvis'
     version = 2.0
@@ -50,7 +45,7 @@ def info():
 def greet_to():
     hour = int(datetime.datetime.now().strftime('%I'))
    
-    minute = int(datetime.datetime.now().strftime('%M'))
+    # minute = int(datetime.datetime.now().strftime('%M'))
     meridian = str(datetime.datetime.now().strftime('%p'))
     
     if hour>=5 and hour<=12 and meridian=='AM':
@@ -77,7 +72,10 @@ def open(path):
 def search():
     pass
 
- 
+def push():
+    # witer the push to git hub code here 
+    pass 
+
 def Execution():
     def Command():
         with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
@@ -102,6 +100,7 @@ def Execution():
     speak('Wait a few moment intializing the system')
     time.sleep(1)
     speak('System is ready to use')
+    
     while(down):
         
         query = Command()
@@ -147,19 +146,23 @@ def Execution():
         elif 'open chrome' in query:
                 speak('Opening Google Chrome')
                 open('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe')
-        
+        elif 'take input' in query:
+                string = input('Enter the command ')
+                print(f"Entered text is {string}")
+        elif 'push to github' in query:
+                speak('Pushing to Github')
+                push()
+                
 def fun():
     thread.start()
-    
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    sys.exit(app.exec_())
+    app.exec_()
+    thread.join()
 if __name__ == '__main__':
     thread = threading.Thread(target=Execution)
-
     fun()
-    thread.join()
     
