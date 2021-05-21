@@ -1,3 +1,4 @@
+import ntpath
 import sys
 import requests
 import pyttsx3
@@ -19,6 +20,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUiType
 from GUI.MainGUI import Ui_MainWindow
 import threading
+from UTILITY.main import Coronameter
 
 r = sr.Recognizer() 
 # r.adjust_for_ambient_noise()
@@ -159,6 +161,18 @@ def Execution():
                 push()
         elif 'wheather' in query:
                 report()
+        elif 'covid' in query:
+                speak("Wait, a moment sir fetching data")
+                covid = Coronameter()
+                total_cases = covid.total_case()
+                speak("sir the , report is ")
+                ntfc('Total Cases : ',total_cases)
+                speak(f'Total Cases around the world are {total_cases}')
+                total_death = covid.total_death()
+                ntfc('Total Death : ',total_death)
+                speak(f'and , Total Death around the world are {total_death}')
+                
+                
 def fun():
     thread.start()
     app = QtWidgets.QApplication(sys.argv)
