@@ -21,7 +21,7 @@ from PyQt5.uic import loadUiType
 from GUI.MainGUI import Ui_MainWindow
 import threading
 from UTILITY.main import Coronameter
-
+from twilio.rest import Client
 r = sr.Recognizer() 
 # r.adjust_for_ambient_noise()
 # r.energy_threshold
@@ -35,6 +35,8 @@ chunk_size = 2048*2
 
 
 master = 'Aditya'
+SID = os.environ['TWILIO_SID']
+TOKEN = os.environ['TWILIO_TOKEN']
 # mic_list = sr.Microphone.list_microphone_names()
 
 
@@ -74,7 +76,15 @@ def open(path):
 def search():
     # write the search code in here
     pass
-
+def sendmsg(msg):
+    try:
+        clinet = Client(SID,TOKEN)
+        msg = clinet.messages.create(body=msg , to ='+916266641612',from_= "+16129792966")
+        print("message sent successfully ")
+        speak('message sent successfully ')
+    except:
+        print("message not sent ")
+        speak('message not sent')
 def push():
     # writer the push to git hub code here 
     pass 
@@ -171,7 +181,10 @@ def Execution():
                 total_death = covid.total_death()
                 ntfc('Total Death : ',total_death)
                 speak(f'and , Total Death around the world are {total_death}')
-                
+        elif 'send' in query:
+                speak('what do you want to say sir ')
+                msg = Command()
+                sendmsg(msg)
                 
 def fun():
     thread.start()
