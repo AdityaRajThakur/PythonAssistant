@@ -31,8 +31,8 @@ for key in data:
         continue
 
 
-
+# to convert form kelvin to celsius 
+#  273.15 
 tmp = main['temp']
 humd = main['humidity']
 clouds  = main['clouds']
-
