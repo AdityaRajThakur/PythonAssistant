@@ -1,6 +1,7 @@
 import ntpath
 import sys
 import requests
+import socket
 import pyttsx3
 import speech_recognition as sr
 import wikipedia as wiki
@@ -63,7 +64,11 @@ def greet_to():
         speak(f'Good Night {master}')
 
 def ntfc(title,m):
-    notification.notify(title = title , app_name = 'Jarvis',message = m ,timeout = 6,app_icon ='E:\\PyAssistant\\brain.ico',toast = True)
+    notification.notify(title = title , app_name = 'Jarvis',
+                                        message = m,
+                                        timeout = 6,
+                                        app_icon ='E:\\PyAssistant\\brain.ico',
+                                        toast = True)
 
 def speak(text):
     engine.say(text)
@@ -90,6 +95,12 @@ def push():
     pass 
 def report():
     pass
+def whatismyip():
+    hostcomputer = socket.gethostname()
+    ipv4 = socket.gethostbyname(hostcomputer)
+    speak(f'Your ip address is {ipv4}')
+    ntfc("Your ip address is " , ipv4)
+    
 def Execution():
     def Command():
         with sr.Microphone(device_index=device_id,sample_rate=sample_rate,chunk_size=chunk_size) as source:
@@ -175,16 +186,18 @@ def Execution():
                 speak("Wait, a moment sir fetching data")
                 covid = Coronameter()
                 total_cases = covid.total_case()
+                total_death = covid.total_death()
                 speak("sir the , report is ")
                 ntfc('Total Cases : ',total_cases)
                 speak(f'Total Cases around the world are {total_cases}')
-                total_death = covid.total_death()
                 ntfc('Total Death : ',total_death)
                 speak(f'and , Total Death around the world are {total_death}')
         elif 'send' in query:
                 speak('what do you want to say sir ')
                 msg = Command()
                 sendmsg(msg)
+        elif 'ip address'
+        
                 
 def fun():
     thread.start()

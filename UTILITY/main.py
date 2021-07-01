@@ -29,7 +29,7 @@ class Coronameter():
             if c.isdigit():
                 new_death+=c
 
-        # print(new_death)
+        print(new_death)
         return int(new_death)
 
     # total new cases in world
@@ -44,8 +44,11 @@ class Coronameter():
             if c.isdigit():
                 new_case+=c
         
-        # print(new_case)
+        print(new_case)
         return int(new_case)
     
         
-        
+a = Coronameter()
+
+a.total_death()
+a.total_case()
